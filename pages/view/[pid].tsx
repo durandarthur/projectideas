@@ -1,13 +1,27 @@
-import { Autocomplete, Button, Container, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { NextPage } from "next";
 import { Fragment } from "react";
-import Header from "../components/Header";
-import Posts from "../components/Posts";
-import TagBar from "../components/TagBar";
-import theme from "../src/theme";
+import Header from "../../components/Header";
+import TagBarFixed from "../../components/TagBarFixed";
+import theme from "../../src/theme";
+import { knex } from "knex";
+import config from "../../src/knexConfig";
+import { useRouter } from "next/router";
 
-const View: NextPage = () => {
+export async function getServerSideProps() {
+	const db = knex(config);
+	const router = useRouter();
+	const { pid } = router.query;
+
+	return {
+		props: {
+			posts: await db("post").select().where({ postid: pid }),
+		},
+	};
+}
+
+const View: NextPage = ({ posts }: any) => {
 	return (
 		<Fragment>
 			<Header />
@@ -44,6 +58,8 @@ const View: NextPage = () => {
 			>
 				{/* limit number of characters on the text fields, so you can't fill the database */}
 				<TextField
+					value={posts.posttitle}
+					disabled={true}
 					variant="outlined"
 					placeholder="Idea title"
 					sx={{ borderRadius: "10px 10px 0 0", mt: "10px" }}
@@ -52,7 +68,9 @@ const View: NextPage = () => {
 					}}
 				></TextField>
 				<TextField
+					value={posts.posttext}
 					multiline
+					disabled={true}
 					rows={15}
 					sx={{
 						height: "75%",
@@ -65,7 +83,7 @@ const View: NextPage = () => {
 						style: { fontSize: "3vmin", borderRadius: "0", height: "100%" },
 					}}
 				></TextField>
-				<TagBar border_radius="0 0 10px 10px" font_size="3vmin"/>
+				<TagBarFixed value={posts.posttags} border_radius="0 0 10px 10px" font_size="3vmin" />
 			</Box>
 		</Fragment>
 	);

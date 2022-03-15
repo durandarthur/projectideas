@@ -13,19 +13,15 @@ import theme from "../src/theme";
 interface tagProps {
 	border_radius?: string;
 	font_size?: string | number;
-	handleChange: any;
 	value: string[];
-	setFieldValue: any;
 }
 
-export default function TagBar(props: tagProps) {
+export default function TagBarFixed(props: tagProps) {
 	
 	return (
 		<Autocomplete
-			onChange={(e, value) => props.setFieldValue("tags", value)}
 			multiple
 			id="tags"
-			name="tags"
 			sx={{
 				width: "75%",
 				backgroundColor: theme.palette.primary.main,
@@ -54,14 +50,14 @@ export default function TagBar(props: tagProps) {
 			}}
 			options={tagOptions}
 			getOptionLabel={(option) => option}
-			// defaultValue={[tagOptions[1]]}
 			renderInput={(params) => (
 				<TextField
 					{...params}
 					name="tags-standard"
 					value={props.value}
 					variant="standard"
-					placeholder={props.value.length == 0 ? "Enter some tags !" : "Tags"}
+                    disabled={true}
+					// placeholder={props.value.length == 0 ? "Enter some tags !" : "Tags"}
 					sx={{
 						fontSize: "3vmin",
 						padding: "10px",
