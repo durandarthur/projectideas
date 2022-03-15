@@ -4,21 +4,11 @@ import { NextPage } from "next";
 import { Fragment } from "react";
 import Header from "../components/Header";
 import theme from "../src/theme";
-import { Knex, knex } from "knex";
+import { knex } from "knex";
+import config from "../src/knexConfig";
 import Link from "next/link";
 import TagSearchBar from "../components/TagSearchBar";
 
-const config: Knex.Config = {
-	client: "pg",
-	connection: {
-		host: "127.0.0.1",
-		port: 5432,
-		user: "postgres",
-		database: "projectideas",
-	},
-	//asyncStackTraces: true,
-	//debug: true,
-};
 
 export async function getServerSideProps() {
 	const db = knex(config);
@@ -84,8 +74,8 @@ const Browse: NextPage = ({ posts }: any) => {
 					<Stack sx={{ width: "100%" }}>
 						{console.log(posts)}
 						{posts.map((post: any) => (
-							//console.log(post),
-							<Link href="#">
+							// link to view the post by its id, using dynamic routing
+							<Link href={`/view/${post.postid}`}> 
 								<Box
 									key={post.postid}
 									sx={{
