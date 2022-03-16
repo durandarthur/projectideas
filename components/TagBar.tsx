@@ -54,7 +54,7 @@ export default function TagBar(props: tagProps) {
 			}}
 			options={tagOptions}
 			getOptionLabel={(option) => option}
-			// defaultValue={[tagOptions[1]]}
+			// defaultValue={props.value}
 			renderInput={(params) => (
 				<TextField
 					{...params}

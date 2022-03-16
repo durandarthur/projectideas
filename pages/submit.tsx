@@ -21,7 +21,7 @@ import * as Yup from "yup";
 type Values = {
 	title: String;
 	text: String;
-	tags: String[];
+	tags: string[];
 };
 
 const modalBoxStyle = {

@@ -17,11 +17,10 @@ interface tagProps {
 }
 
 export default function TagBarFixed(props: tagProps) {
-	
 	return (
 		<Autocomplete
 			multiple
-			id="tags"
+			id="tags-readOnly"
 			sx={{
 				width: "75%",
 				backgroundColor: theme.palette.primary.main,
@@ -48,15 +47,16 @@ export default function TagBarFixed(props: tagProps) {
 					width: "100%!important",
 				}
 			}}
-			options={tagOptions}
-			getOptionLabel={(option) => option}
+			// disabled={true}
+			options={tagOptions.map((option) => option)}
+			// getOptionLabel={(option) => option}
+			value={props.value}
+			readOnly
 			renderInput={(params) => (
 				<TextField
 					{...params}
-					name="tags-standard"
-					value={props.value}
-					variant="standard"
-                    disabled={true}
+					// name="tags-standard"
+					// variant="standard"
 					// placeholder={props.value.length == 0 ? "Enter some tags !" : "Tags"}
 					sx={{
 						fontSize: "3vmin",
