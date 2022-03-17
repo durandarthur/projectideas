@@ -61,6 +61,18 @@ const Submit: NextPage = () => {
 	const [open, setOpen] = useState(false);
 	const handleClose = () => setOpen(false);
 
+	const formValidation = (event:any) => {
+		event.preventDefault();
+		if (formik.errors) {
+			console.log(formik.errors);
+			setOpen(true);
+		}
+		else {
+			formik.handleSubmit;
+		}
+
+	}
+
 	const formik = useFormik({
 		initialValues: {
 			title: "",
@@ -121,7 +133,7 @@ const Submit: NextPage = () => {
 					}
 				}}
 			>
-					<form onSubmit={formik.handleSubmit}>
+					<form onSubmit={formValidation}>
 						<TextField
 							id="title"
 							name="title"
@@ -134,6 +146,7 @@ const Submit: NextPage = () => {
 								style: { fontSize: "5vmin", borderRadius: "10px 10px 0 0" },
 							}}
 						></TextField>
+						{formik.errors.title && formik.touched.title ? setOpen(true) : null}
 						<TextField
 							multiline
 							id="text"
@@ -190,7 +203,6 @@ const Submit: NextPage = () => {
 							>
 								<Box sx={modalBoxStyle}>
 									<Typography id="modal-modal-title" variant="h6" component="h2">
-									{/* Enter at least one tag ! */}
 									{ formik.errors.title && formik.touched.title ? formik.errors.title : null }
 									{ formik.errors.text && formik.touched.text ? formik.errors.text : null }
 									{ formik.values.tags.length === 0 ? "Enter at least one tag !" : null }

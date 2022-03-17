@@ -40,13 +40,15 @@ const View: NextPage = ({ posts }: any) => {
 					justifyContent: "center",
 					height: "calc(100vh - 64px)",
 					backgroundColor: theme.palette.primary.dark,
-					">.MuiTextField-root": {
+					".MuiTextField-root": {
 						width: "75%",
 						backgroundColor: theme.palette.primary.main,
 						borderRadius: "0",
-						"input, textarea": {
-							color: theme.palette.secondary.light,
-							"&::placeholder": { color: theme.palette.primary.dark },
+						".MuiInputBase-root": {
+							".MuiInputBase-input": {
+								color: theme.palette.secondary.light,
+								// "&::placeholder": { color: theme.palette.primary.dark },
+							},
 						},
 						">.MuiInputBase-multiline": {
 							borderRadius: "0",
@@ -65,7 +67,8 @@ const View: NextPage = ({ posts }: any) => {
 			>
 				{/* limit number of characters on the text fields, so you can't fill the database */}
 				<TextField
-					disabled={true}
+					// disabled={true}
+					readOnly
 					value={posts[0].posttitle}
 					variant="outlined"
 					placeholder="Idea title"
@@ -76,7 +79,8 @@ const View: NextPage = ({ posts }: any) => {
 				></TextField>
 				<TextField
 					multiline
-					disabled={true}
+					readOnly
+					// disabled={true}
 					value={posts[0].posttext}
 					rows={15}
 					sx={{
