@@ -47,9 +47,6 @@ const Submit: NextPage = () => {
 		text: Yup.string()
 			.max(6000, "Description must be under 6000 characters !")
 			.required("Enter a description !"),
-		tags: Yup.array()
-			.of(Yup.string().min(1))
-			.required("Select at least one tag !"), //doesnt work
 	});
 
 	const [open, setOpen] = useState(false);
@@ -171,8 +168,6 @@ const Submit: NextPage = () => {
 						}}
 					></TextField>
 					<TagBar
-						touched={formik.touched.tags}
-						errors={formik.errors.tags}
 						handleChange={formik.handleChange}
 						value={formik.values.tags}
 						setFieldValue={formik.setFieldValue}
