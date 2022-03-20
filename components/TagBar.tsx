@@ -15,8 +15,6 @@ interface tagProps {
 	font_size?: string | number;
 	handleChange: any;
 	value: string[];
-	touched: any;
-	errors: any;
 	setFieldValue: any;
 }
 
@@ -56,17 +54,14 @@ export default function TagBar(props: tagProps) {
 			}}
 			options={tagOptions}
 			getOptionLabel={(option) => option}
-			// defaultValue={props.value}
 			renderInput={(params) => (
 				<TextField
 					{...params}
 					onChange={props.handleChange}
-					error={props.touched && Boolean(props.errors)}
-					helperText={props.touched && props.errors}
 					name="tags-standard"
 					value={props.value}
 					variant="standard"
-					// placeholder={props.value.length == 0 ? "Enter some tags !" : "Tags"}
+					required={props.value.length === 0}
 					placeholder="Tags"
 					sx={{
 						fontSize: "3vmin",
