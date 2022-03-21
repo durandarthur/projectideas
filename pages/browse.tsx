@@ -1,7 +1,7 @@
 import { Stack, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { NextPage } from "next";
-import { Fragment } from "react";
+import { FormEvent, Fragment, useState } from "react";
 import Header from "../components/Header";
 import theme from "../src/theme";
 import { knex } from "knex";
@@ -15,12 +15,38 @@ export async function getServerSideProps() {
 
 	return {
 		props: {
-			posts: await db("post").select(),
+			posts: await db("post").select("postid", "posttitle", "posttags"),
 		},
 	};
 }
 
-const Browse: NextPage = ({ posts }: any) => {
+interface Post {
+	postid: number,
+	posttitle: string,
+	posttags: string[]
+}
+
+function Browse({ posts }: { posts:Post[] }) {
+	const [titleInput, setTitleInput] = useState("");
+	// let titleInputHandler = (e: FormEvent<HTMLInputElement>) => {
+	//   //convert input text to lower case
+	//   var lowerCase = e.target.value.toLowerCase();
+	//   setTitleInputText(lowerCase);
+	// };
+	const [tagsInput, setTagsInput] = useState([""]);
+	// let tagsInputHandler = (e: FormEvent<HTMLInputElement>) => {
+	//   //convert input text to lower case
+	//   var lowerCase = e.target.value.toLowerCase();
+	//   setTitleInputText(lowerCase);
+	// };
+	const filteredPosts = posts.filter((element) => {
+		if (titleInput === '') {
+			return element;
+		}
+		else {
+			return element.posttitle.toLowerCase().includes(titleInput);
+		}
+	})
 	return (
 		<Fragment>
 			<Header />
@@ -56,7 +82,9 @@ const Browse: NextPage = ({ posts }: any) => {
 				}}
 			>
 				<TextField
+					onChange={(e) => setTitleInput(e.target.value.toLowerCase())}
 					variant="outlined"
+					value={titleInput}
 					placeholder="Keywords"
 					sx={{ borderRadius: "10px 10px 0 0", mt: "10px" }}
 					inputProps={{
@@ -72,12 +100,12 @@ const Browse: NextPage = ({ posts }: any) => {
 					textOverflow: "ellipsis",
 				}}>
 					<Stack sx={{ width: "100%" }}>
-						{console.log(posts)}
-						{posts.map((post: any) => (
+						{/*console.log(posts)*/}
+						{filteredPosts.map((item: Post) => (
 							// link to view the post by its id, using dynamic routing
-							<Link href={`/view/${post.postid}`}> 
+							<Link href={`/view/${item.postid}`}> 
 								<Box
-									key={post.postid}
+									key={item.postid}
 									sx={{
 										backgroundColor: theme.palette.primary.main,
 										color: theme.palette.secondary.light,
@@ -91,7 +119,7 @@ const Browse: NextPage = ({ posts }: any) => {
 										},
 									}}
 								>
-									{post.posttitle}
+									{item.posttitle}
 								</Box>
 							</Link>
 						))}
