@@ -5,13 +5,14 @@ import theme from "../src/theme";
 interface tagSearchProps {
 	border_radius?: string;
 	font_size?: string | number;
+	setTagsInput: any;
 }
 
 export default function TagSearchBar(props: tagSearchProps) {
 	
 	return (
 		<Autocomplete
-			// onChange={}
+			onChange={(e, value) => props.setTagsInput(value)} //this part works
 			multiple
 			id="tags"
 			name="tags"
@@ -40,12 +41,10 @@ export default function TagSearchBar(props: tagSearchProps) {
 			}}
 			options={tagOptions}
 			getOptionLabel={(option) => option}
-			// defaultValue={[tagOptions[1]]}
 			renderInput={(params) => (
 				<TextField
 					{...params}
 					name="tags-standard"
-					// value={}
 					variant="standard"
 					placeholder="Add Tags"
 					sx={{
