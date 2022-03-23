@@ -1,7 +1,6 @@
-import { Stack, TextField, Typography } from "@mui/material";
+import { Stack, TextField} from "@mui/material";
 import { Box } from "@mui/system";
-import { NextPage } from "next";
-import { FormEvent, Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import Header from "../components/Header";
 import theme from "../src/theme";
 import { knex } from "knex";
@@ -23,28 +22,27 @@ export async function getServerSideProps() {
 interface Post {
 	postid: number,
 	posttitle: string,
-	posttags: string[]
+	posttags: string //change if needed to string[]
 }
 
 function Browse({ posts }: { posts:Post[] }) {
 	const [titleInput, setTitleInput] = useState("");
-	// let titleInputHandler = (e: FormEvent<HTMLInputElement>) => {
-	//   //convert input text to lower case
-	//   var lowerCase = e.target.value.toLowerCase();
-	//   setTitleInputText(lowerCase);
-	// };
 	const [tagsInput, setTagsInput] = useState([""]);
-	// let tagsInputHandler = (e: FormEvent<HTMLInputElement>) => {
-	//   //convert input text to lower case
-	//   var lowerCase = e.target.value.toLowerCase();
-	//   setTitleInputText(lowerCase);
-	// };
 	const filteredPosts = posts.filter((element) => {
 		if (titleInput === '') {
 			return element;
 		}
 		else {
 			return element.posttitle.toLowerCase().includes(titleInput);
+		}
+	}).filter((element) => {
+		const tags: string[] = JSON.parse("[" + element.posttags.replace("{","").replace("}","") + "]");
+		if (tagsInput === ['']) {
+			return element;
+		}
+		else {
+			// check if every tag in the search input is in the corresponding post
+			return tagsInput.every(el => tags.includes(el));
 		}
 	})
 	return (
@@ -91,7 +89,7 @@ function Browse({ posts }: { posts:Post[] }) {
 						style: { fontSize: "5vmin", borderRadius: "10px 10px 0 0" },
 					}}
 				></TextField>
-				<TagSearchBar font_size="3vmin" />
+				<TagSearchBar setTagsInput={setTagsInput} font_size="3vmin" />
 				<Box sx={{
 					height: "60vh",
 					width: "75%",
@@ -100,10 +98,9 @@ function Browse({ posts }: { posts:Post[] }) {
 					textOverflow: "ellipsis",
 				}}>
 					<Stack sx={{ width: "100%" }}>
-						{/*console.log(posts)*/}
 						{filteredPosts.map((item: Post) => (
 							// link to view the post by its id, using dynamic routing
-							<Link href={`/view/${item.postid}`}> 
+							<Link key={item.postid} href={`/view/${item.postid}`}> 
 								<Box
 									key={item.postid}
 									sx={{

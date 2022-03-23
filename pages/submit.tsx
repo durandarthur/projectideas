@@ -10,21 +10,9 @@ import theme from "../src/theme";
 import * as Yup from "yup";
 
 type Values = {
-	title: String;
-	text: String;
+	title: string;
+	text: string;
 	tags: string[];
-};
-
-const modalBoxStyle = {
-	position: "absolute" as "absolute",
-	top: "50%",
-	left: "50%",
-	transform: "translate(-50%, -50%)",
-	width: 400,
-	bgcolor: "white",
-	border: "2px solid #000",
-	// boxShadow: 24,
-	p: 4,
 };
 
 const Submit: NextPage = () => {
@@ -49,9 +37,6 @@ const Submit: NextPage = () => {
 			.required("Enter a description !"),
 	});
 
-	const [open, setOpen] = useState(false);
-	const handleClose = () => setOpen(false);
-
 	// const formValidation = (event:any) => {
 	// 	event.preventDefault();
 	// 	if (formik.errors) {
@@ -71,15 +56,9 @@ const Submit: NextPage = () => {
 			tags: [],
 		},
 		onSubmit: (values) => {
-			/*if (values.tags.length > 0) {
-				console.log("submitting");
-				handleSubmit(values);
-			}
-			else {
-				console.log("opening");
-				setOpen(true);
-			}*/
-			alert(JSON.stringify(values, null, 2));
+			handleSubmit(values);
+			// alert(JSON.stringify(values, null, 2));
+			// add redirect
 		},
 		validationSchema: validationSchema,
 	});
@@ -141,7 +120,6 @@ const Submit: NextPage = () => {
 							style: { fontSize: "5vmin", borderRadius: "10px 10px 0 0" },
 						}}
 					></TextField>
-					{formik.errors.title && formik.touched.title ? setOpen(true) : null}
 					<TextField
 						multiline
 						id="text"
@@ -155,7 +133,6 @@ const Submit: NextPage = () => {
 							borderTop: `0.01px solid ${theme.palette.secondary.main}`,
 						}}
 						variant="outlined"
-						// placeholder={formik.errors.text && formik.touched.text ? formik.errors.text : "Description"}
 						placeholder={"Description"}
 						error={formik.touched.text && Boolean(formik.errors.text)}
 						helperText={formik.touched.text && formik.errors.text}
@@ -199,26 +176,6 @@ const Submit: NextPage = () => {
 						<Button variant="outlined" color="primary" href="/">
 							CANCEL
 						</Button>
-						<Modal
-							open={open}
-							onClose={handleClose}
-							aria-labelledby="Validation Error Modal"
-							aria-describedby="The modal that pops up when one of the fields isn't filled."
-						>
-							<Box sx={modalBoxStyle}>
-								<Typography id="modal-modal-title" variant="h6" component="h2">
-									{formik.errors.title && formik.touched.title
-										? formik.errors.title
-										: null}
-									{formik.errors.text && formik.touched.text
-										? formik.errors.text
-										: null}
-									{formik.values.tags.length === 0
-										? "Enter at least one tag !"
-										: null}
-								</Typography>
-							</Box>
-						</Modal>
 					</Container>
 				</form>
 			</Box>
