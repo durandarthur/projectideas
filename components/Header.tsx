@@ -1,10 +1,12 @@
-import { Toolbar, Link, Card } from "@mui/material";
+import { Toolbar, Link, Card, Popover } from "@mui/material";
 import React, { useState } from "react";
 import PaletteIcon from "@mui/icons-material/Palette";
 import theme from "../src/theme";
 
 function Header() {
-	const [cardOpen, setCardOpen] = useState("none");
+	const [themePickerOpen, setThemePickerOpen] = useState(false);
+	const [anchorEl, setAnchorEl] = useState<SVGSVGElement | null>(null);
+	
 	return (
 		<Toolbar
 			sx={{
@@ -27,12 +29,31 @@ function Header() {
 			<Link href="/browse">Browse</Link>
 			<Link href="/about">About</Link>
 			<PaletteIcon
-				onClick={() =>
-					cardOpen === "none" ? setCardOpen("flex") : setCardOpen("none")
+				id="paletteIcon"
+				onClick={(e) => {
+						setThemePickerOpen(true);
+						if (anchorEl === null)
+							setAnchorEl(e.currentTarget);
+					}
 				}
 				sx={{ color: theme.palette.secondary.main, ml: "auto" }}
-			></PaletteIcon>
-			<Card sx={{ display: cardOpen, width: "15vw" }}>test</Card>
+			>
+			</PaletteIcon>
+			<Popover
+					open={themePickerOpen}
+					onClose={() => setThemePickerOpen(false)}
+					anchorEl={anchorEl}
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'center',
+					}}
+					transformOrigin={{
+						vertical: 'top',
+						horizontal: 'center',
+					}}
+				>
+				The content of the Popover.
+				</Popover>
 		</Toolbar>
 	);
 }
