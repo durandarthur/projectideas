@@ -1,17 +1,18 @@
-import { Container, Typography, Divider } from '@mui/material'
-import { Box } from '@mui/system'
-import type { NextPage } from 'next'
-import Link from 'next/link'
-import React, { Fragment } from 'react'
-import styles from '../styles/Home.module.css'
+import { Container, Typography, Divider } from "@mui/material";
+import { Box } from "@mui/system";
+import type { NextPage } from "next";
+import Link from "next/link";
+import React, { Fragment, useState } from "react";
+import styles from "../styles/Home.module.css";
 import NoteAltOutlinedIcon from "@mui/icons-material/NoteAltOutlined";
 import SearchIcon from "@mui/icons-material/Search";
-import Header from '../components/Header'
-import theme from '../src/theme'
+import Header from "../components/Header";
+import { purple } from "../src/theme";
 
 const Home: NextPage = () => {
-  return (
-    <Fragment>
+	const [theme, setTheme] = useState(purple);
+	return (
+		<Fragment>
 			<Header />
 			<Box
 				sx={{
@@ -60,7 +61,7 @@ const Home: NextPage = () => {
 				</Container>
 			</Box>
 		</Fragment>
-  )
-}
+	);
+};
 
-export default Home
+export default Home;

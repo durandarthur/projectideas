@@ -3,9 +3,10 @@ import { Box } from "@mui/system";
 import { NextPage } from "next";
 import { Fragment } from "react";
 import Header from "../components/Header";
-import theme from "../src/theme";
+import { purple } from "../src/theme";
 
 const About: NextPage = () => {
+	const [theme, setTheme] = useState(purple);
 	return (
 		<Fragment>
 			<Header />

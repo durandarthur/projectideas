@@ -2,7 +2,7 @@ import { useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { tagOptions } from "../src/tags";
-import theme from "../src/theme";
+import { purple } from "../src/theme";
 
 // type Values = {
 // 	title: String;
@@ -19,7 +19,7 @@ interface tagProps {
 }
 
 export default function TagBar(props: tagProps) {
-	
+	const [theme, setTheme] = useState(purple);
 	return (
 		<Autocomplete
 			onChange={(e, value) => props.setFieldValue("tags", value)}

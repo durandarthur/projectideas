@@ -1,12 +1,15 @@
 import { Toolbar, Link, Card, Popover } from "@mui/material";
+import CircleIcon from "@mui/icons-material/Circle";
 import React, { useState } from "react";
 import PaletteIcon from "@mui/icons-material/Palette";
-import theme from "../src/theme";
+import { purple } from "../src/theme";
+import { amber, green, indigo, pink, red } from "@mui/material/colors";
 
 function Header() {
 	const [themePickerOpen, setThemePickerOpen] = useState(false);
 	const [anchorEl, setAnchorEl] = useState<SVGSVGElement | null>(null);
-	
+	const [theme, setTheme] = useState(purple);
+
 	return (
 		<Toolbar
 			sx={{
@@ -31,29 +34,49 @@ function Header() {
 			<PaletteIcon
 				id="paletteIcon"
 				onClick={(e) => {
-						setThemePickerOpen(true);
-						if (anchorEl === null)
-							setAnchorEl(e.currentTarget);
-					}
-				}
-				sx={{ color: theme.palette.secondary.main, ml: "auto" }}
-			>
-			</PaletteIcon>
+					setThemePickerOpen(true);
+					if (anchorEl === null) setAnchorEl(e.currentTarget);
+				}}
+				sx={{
+					color: theme.palette.secondary.main,
+					ml: "auto",
+					cursor: "pointer",
+				}}
+			></PaletteIcon>
 			<Popover
-					open={themePickerOpen}
-					onClose={() => setThemePickerOpen(false)}
-					anchorEl={anchorEl}
-					anchorOrigin={{
-						vertical: 'bottom',
-						horizontal: 'center',
-					}}
-					transformOrigin={{
-						vertical: 'top',
-						horizontal: 'center',
+				open={themePickerOpen}
+				onClose={() => setThemePickerOpen(false)}
+				anchorEl={anchorEl}
+				anchorOrigin={{
+					vertical: "bottom",
+					horizontal: "center",
+				}}
+				transformOrigin={{
+					vertical: "top",
+					horizontal: "center",
+				}}
+			>
+				<Card
+					sx={{
+						backgroundColor: theme.palette.primary.dark,
+						">div": {
+							display: "flex",
+							">svg": { m: "20px", cursor: "pointer", fontSize: "5vmin" },
+						},
 					}}
 				>
-				The content of the Popover.
-				</Popover>
+					<div style={{ display: "flex" }}>
+						<CircleIcon sx={{ color: red[500] }} />
+						<CircleIcon sx={{ color: pink[500] }} />
+						<CircleIcon sx={{ color: theme.palette.primary.main }} />
+					</div>
+					<div style={{ display: "flex" }}>
+						<CircleIcon sx={{ color: indigo[500] }} />
+						<CircleIcon sx={{ color: green[500] }} />
+						<CircleIcon sx={{ color: amber[500] }} />
+					</div>
+				</Card>
+			</Popover>
 		</Toolbar>
 	);
 }
