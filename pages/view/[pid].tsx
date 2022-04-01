@@ -1,10 +1,10 @@
 import { TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { GetServerSidePropsContext, NextPage } from "next";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import Header from "../../components/Header";
 import TagBarFixed from "../../components/TagBarFixed";
-import theme from "../../src/theme";
+import { purple } from "../../src/theme";
 import { knex } from "knex";
 import config from "../../src/knexConfig";
 import { useRouter } from "next/router";
@@ -27,6 +27,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const View: NextPage = ({ posts }: any) => {
+	const [theme, setTheme] = useState(purple);
 	const posttags: string[] = JSON.parse("[" + posts[0].posttags.replace("{","").replace("}","") + "]");
 	// console.log(posttags);
 	return (

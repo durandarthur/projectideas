@@ -2,7 +2,7 @@ import { Stack, TextField} from "@mui/material";
 import { Box } from "@mui/system";
 import { Fragment, useState } from "react";
 import Header from "../components/Header";
-import theme from "../src/theme";
+import { purple } from "../src/theme";
 import { knex } from "knex";
 import config from "../src/knexConfig";
 import Link from "next/link";
@@ -26,8 +26,11 @@ interface Post {
 }
 
 function Browse({ posts }: { posts:Post[] }) {
+	const [theme, setTheme] = useState<Object>(purple);
 	const [titleInput, setTitleInput] = useState("");
 	const [tagsInput, setTagsInput] = useState([""]);
+	
+	
 	const filteredPosts = posts.filter((element) => {
 		if (titleInput === '') {
 			return element;

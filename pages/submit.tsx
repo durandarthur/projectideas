@@ -6,7 +6,7 @@ import { NextPage } from "next";
 import { Fragment, useState } from "react";
 import Header from "../components/Header";
 import TagBar from "../components/TagBar";
-import theme from "../src/theme";
+import { purple } from "../src/theme";
 import * as Yup from "yup";
 
 type Values = {
@@ -16,6 +16,8 @@ type Values = {
 };
 
 const Submit: NextPage = () => {
+	const [theme, setTheme] = useState(purple);
+	
 	function handleSubmit(values: Values) {
 		axios
 			.post("http://localhost:3000/api/post", {
