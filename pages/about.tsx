@@ -1,12 +1,14 @@
 import { Container, Divider, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { NextPage } from "next";
-import { Fragment } from "react";
+import { Fragment, useContext, useState } from "react";
 import Header from "../components/Header";
-import { purple } from "../src/theme";
+import { ThemeContext } from "../components/ThemeContextProvider";
+import { Purple } from "../src/theme";
 
 const About: NextPage = () => {
-	const [theme, setTheme] = useState(purple);
+	// const [theme, setTheme] = useState(purple);
+	const { theme, setTheme } = useContext(ThemeContext);
 	return (
 		<Fragment>
 			<Header />

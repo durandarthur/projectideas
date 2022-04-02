@@ -1,14 +1,15 @@
 import { TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { GetServerSidePropsContext, NextPage } from "next";
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import Header from "../../components/Header";
 import TagBarFixed from "../../components/TagBarFixed";
-import { purple } from "../../src/theme";
+import { Purple } from "../../src/theme";
 import { knex } from "knex";
 import config from "../../src/knexConfig";
 import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
+import { ThemeContext } from "../../components/ThemeContextProvider";
 
 interface IParams extends ParsedUrlQuery {
     pid: string
@@ -27,7 +28,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const View: NextPage = ({ posts }: any) => {
-	const [theme, setTheme] = useState(purple);
+	// const [theme, setTheme] = useState(purple);
+	const { theme, setTheme } = useContext(ThemeContext);
 	const posttags: string[] = JSON.parse("[" + posts[0].posttags.replace("{","").replace("}","") + "]");
 	// console.log(posttags);
 	return (

@@ -1,7 +1,9 @@
 import { Autocomplete, TextField } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { tagOptions } from "../src/tags";
-import { purple } from "../src/theme";
+import { Purple } from "../src/theme";
+import { Theme } from "../src/theme";
+import { ThemeContext } from "./ThemeContextProvider";
 
 interface tagSearchProps {
 	border_radius?: string;
@@ -10,7 +12,8 @@ interface tagSearchProps {
 }
 
 export default function TagSearchBar(props: tagSearchProps) {
-	const [theme, setTheme] = useState<Object>(purple);
+	// const [theme, setTheme] = useState<Theme>(purple);
+	const { theme, setTheme } = useContext(ThemeContext);
 	return (
 		<Autocomplete
 			onChange={(e, value) => props.setTagsInput(value)} //this part works

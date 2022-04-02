@@ -1,12 +1,13 @@
 import { Stack, TextField} from "@mui/material";
 import { Box } from "@mui/system";
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import Header from "../components/Header";
-import { purple } from "../src/theme";
+import { Purple } from "../src/theme";
 import { knex } from "knex";
 import config from "../src/knexConfig";
 import Link from "next/link";
 import TagSearchBar from "../components/TagSearchBar";
+import { ThemeContext } from "../components/ThemeContextProvider";
 
 
 export async function getServerSideProps() {
@@ -26,7 +27,8 @@ interface Post {
 }
 
 function Browse({ posts }: { posts:Post[] }) {
-	const [theme, setTheme] = useState<Object>(purple);
+	// const [theme, setTheme] = useState<Object>(purple);
+	const { theme, setTheme } = useContext(ThemeContext);
 	const [titleInput, setTitleInput] = useState("");
 	const [tagsInput, setTagsInput] = useState([""]);
 	

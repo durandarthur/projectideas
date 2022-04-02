@@ -2,15 +2,17 @@ import { Container, Typography, Divider } from "@mui/material";
 import { Box } from "@mui/system";
 import type { NextPage } from "next";
 import Link from "next/link";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import styles from "../styles/Home.module.css";
 import NoteAltOutlinedIcon from "@mui/icons-material/NoteAltOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import Header from "../components/Header";
-import { purple } from "../src/theme";
+import { Purple } from "../src/theme";
+import { ThemeContext } from "../components/ThemeContextProvider";
 
 const Home: NextPage = () => {
-	const [theme, setTheme] = useState(purple);
+	// const [theme, setTheme] = useState(purple);
+	const { theme, setTheme } = useContext(ThemeContext);
 	return (
 		<Fragment>
 			<Header />
