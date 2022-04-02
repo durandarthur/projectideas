@@ -1,14 +1,21 @@
 import { Toolbar, Link, Card, Popover } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PaletteIcon from "@mui/icons-material/Palette";
-import { purple } from "../src/theme";
+import { Purple, Red } from "../src/theme";
 import { amber, green, indigo, pink, red } from "@mui/material/colors";
+import { ThemeContext } from "./ThemeContextProvider";
 
 function Header() {
 	const [themePickerOpen, setThemePickerOpen] = useState(false);
 	const [anchorEl, setAnchorEl] = useState<SVGSVGElement | null>(null);
-	const [theme, setTheme] = useState(purple);
+	// const [theme, setTheme] = useState(purple);
+	const { theme, setTheme } = useContext(ThemeContext);
+
+	const handlePick = () => {
+		setTheme(Red);
+		console.log(theme);
+	}
 
 	return (
 		<Toolbar
@@ -66,7 +73,7 @@ function Header() {
 					}}
 				>
 					<div style={{ display: "flex" }}>
-						<CircleIcon sx={{ color: red[500] }} />
+						<CircleIcon sx={{ color: red[500] }} onClick={handlePick}/>
 						<CircleIcon sx={{ color: pink[500] }} />
 						<CircleIcon sx={{ color: theme.palette.primary.main }} />
 					</div>
