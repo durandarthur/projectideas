@@ -2,8 +2,9 @@ import { Toolbar, Link, Card, Popover } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
 import React, { useContext, useState } from "react";
 import PaletteIcon from "@mui/icons-material/Palette";
-import { Purple, Red } from "../src/theme";
-import { amber, green, indigo, pink, red } from "@mui/material/colors";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import { Amber, Green, Indigo, Pink, Purple, Red } from "../src/theme";
+import { amber, green, indigo, pink, purple, red } from "@mui/material/colors";
 import { ThemeContext } from "./ThemeContextProvider";
 
 function Header() {
@@ -11,11 +12,6 @@ function Header() {
 	const [anchorEl, setAnchorEl] = useState<SVGSVGElement | null>(null);
 	// const [theme, setTheme] = useState(purple);
 	const { theme, setTheme } = useContext(ThemeContext);
-
-	const handlePick = () => {
-		setTheme(Red);
-		console.log(theme);
-	}
 
 	return (
 		<Toolbar
@@ -27,7 +23,7 @@ function Header() {
 			<Link
 				href="/"
 				sx={{
-					color: theme.palette.secondary.main + "!important",
+					color: theme.palette.primary.dark + "!important",
 					fontWeight: "bold",
 					fontSize: "1.5rem",
 					textDecoration: "none",
@@ -38,6 +34,14 @@ function Header() {
 			<Link href="/submit">Post</Link>
 			<Link href="/browse">Browse</Link>
 			<Link href="/about">About</Link>
+			{/* <LightModeIcon
+				id="paletteIcon"
+				sx={{
+					color: theme.palette.primary.dark,
+					ml: "auto",
+					cursor: "pointer",
+				}}
+			></LightModeIcon> */}
 			<PaletteIcon
 				id="paletteIcon"
 				onClick={(e) => {
@@ -45,7 +49,7 @@ function Header() {
 					if (anchorEl === null) setAnchorEl(e.currentTarget);
 				}}
 				sx={{
-					color: theme.palette.secondary.main,
+					color: theme.palette.primary.dark,
 					ml: "auto",
 					cursor: "pointer",
 				}}
@@ -73,14 +77,32 @@ function Header() {
 					}}
 				>
 					<div style={{ display: "flex" }}>
-						<CircleIcon sx={{ color: red[500] }} onClick={handlePick}/>
-						<CircleIcon sx={{ color: pink[500] }} />
-						<CircleIcon sx={{ color: theme.palette.primary.main }} />
+						<CircleIcon
+							sx={{ color: red[500] }}
+							onClick={() => setTheme(Red)}
+						/>
+						<CircleIcon
+							sx={{ color: pink[500] }}
+							onClick={() => setTheme(Pink)}
+						/>
+						<CircleIcon
+							sx={{ color: purple[400] }}
+							onClick={() => setTheme(Purple)}
+						/>
 					</div>
 					<div style={{ display: "flex" }}>
-						<CircleIcon sx={{ color: indigo[500] }} />
-						<CircleIcon sx={{ color: green[500] }} />
-						<CircleIcon sx={{ color: amber[500] }} />
+						<CircleIcon
+							sx={{ color: indigo[500] }}
+							onClick={() => setTheme(Indigo)}
+						/>
+						<CircleIcon
+							sx={{ color: green[500] }}
+							onClick={() => setTheme(Green)}
+						/>
+						<CircleIcon
+							sx={{ color: amber[500] }}
+							onClick={() => setTheme(Amber)}
+						/>
 					</div>
 				</Card>
 			</Popover>
