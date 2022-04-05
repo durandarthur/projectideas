@@ -133,8 +133,8 @@ const Submit: NextPage = () => {
 						rows={15}
 						sx={{
 							height: "75%",
-							borderBottom: `0.01px solid ${theme.palette.secondary.main}`,
-							borderTop: `0.01px solid ${theme.palette.secondary.main}`,
+							borderBottom: `0.01px solid ${theme.palette.primary.dark}`,
+							borderTop: `0.01px solid ${theme.palette.primary.dark}`,
 						}}
 						variant="outlined"
 						placeholder={"Description"}
