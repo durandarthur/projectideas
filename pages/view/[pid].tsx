@@ -3,12 +3,11 @@ import { Box } from "@mui/system";
 import { knex } from "knex";
 import { GetServerSidePropsContext, NextPage } from "next";
 import { ParsedUrlQuery } from "querystring";
-import { Fragment } from "react";
-import { useCookies } from "react-cookie";
+import { Fragment, useContext } from "react";
 import Header from "../../components/Header";
 import TagBarFixed from "../../components/TagBarFixed";
 import config from "../../src/knexConfig";
-import { Purple, Theme } from "../../src/theme";
+import { ThemeContext } from "../../src/themeContext";
 
 interface IParams extends ParsedUrlQuery {
     pid: string
@@ -27,10 +26,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const View: NextPage = ({ posts }: any) => {
-	// const [theme, setTheme] = useState(purple);
-	// const { theme, setTheme } = useContext(ThemeContext);
-	const [themeCookie, setThemeCookie] = useCookies();
-	const theme: Theme = themeCookie && themeCookie['theme'] ? themeCookie['theme'] : Purple;
+	
+	const { theme, setTheme } = useContext(ThemeContext);
 
 	const posttags: string[] = JSON.parse("[" + posts[0].posttags.replace("{","").replace("}","") + "]");
 	// console.log(posttags);
