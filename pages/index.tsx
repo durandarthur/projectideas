@@ -4,16 +4,13 @@ import { Container, Divider, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import type { NextPage } from "next";
 import Link from "next/link";
-import React, { Fragment } from "react";
-import { useCookies } from "react-cookie";
+import { Fragment, useContext } from "react";
 import Header from "../components/Header";
-import { Purple, Theme } from "../src/theme";
+import { ThemeContext } from "../src/themeContext";
 
 const Home: NextPage = () => {
-	// const [theme, setTheme] = useState(purple);
-	// const { theme, setTheme } = useContext(ThemeContext);
-	const [themeCookie, setThemeCookie] = useCookies();
-	const theme: Theme = themeCookie && themeCookie['theme'] ? themeCookie['theme'] : Purple;
+
+	const { theme, setTheme } = useContext(ThemeContext);
 
 	return (
 		<Fragment>

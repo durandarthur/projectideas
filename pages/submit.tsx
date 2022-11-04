@@ -3,12 +3,13 @@ import { Box } from "@mui/system";
 import axios from "axios";
 import { useFormik } from "formik";
 import { NextPage } from "next";
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { useCookies } from "react-cookie";
 import * as Yup from "yup";
 import Header from "../components/Header";
 import TagBar from "../components/TagBar";
 import { Purple, Theme } from "../src/theme";
+import { ThemeContext } from "../src/themeContext";
 
 type Values = {
 	title: string;
@@ -17,10 +18,8 @@ type Values = {
 };
 
 const Submit: NextPage = () => {
-	// const [theme, setTheme] = useState(purple);
-	// const { theme, setTheme } = useContext(ThemeContext);
-	const [themeCookie, setThemeCookie] = useCookies();
-	const theme: Theme = themeCookie && themeCookie['theme'] ? themeCookie['theme'] : Purple;
+
+	const { theme, setTheme } = useContext(ThemeContext);
 	
 	function handleSubmit(values: Values) {
 		axios

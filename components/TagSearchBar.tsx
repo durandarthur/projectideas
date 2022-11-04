@@ -1,7 +1,7 @@
 import { Autocomplete, TextField } from "@mui/material";
-import { useCookies } from "react-cookie";
+import { useContext } from "react";
 import { tagOptions } from "../src/tags";
-import { Purple, Theme } from "../src/theme";
+import { ThemeContext } from "../src/themeContext";
 
 interface tagSearchProps {
 	border_radius?: string;
@@ -10,10 +10,8 @@ interface tagSearchProps {
 }
 
 export default function TagSearchBar(props: tagSearchProps) {
-	// const [theme, setTheme] = useState<Theme>(purple);
-	// const { theme, setTheme } = useContext(ThemeContext);
-	const [themeCookie, setThemeCookie] = useCookies();
-	const theme: Theme = themeCookie && themeCookie['theme'] ? themeCookie['theme'] : Purple;
+
+	const { theme, setTheme } = useContext(ThemeContext);
 
 	return (
 		<Autocomplete
