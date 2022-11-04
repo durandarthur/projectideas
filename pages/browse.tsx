@@ -1,14 +1,13 @@
-import { Stack, TextField} from "@mui/material";
+import { Stack, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { Fragment, useContext, useState } from "react";
-import Header from "../components/Header";
-import { Purple } from "../src/theme";
 import { knex } from "knex";
-import config from "../src/knexConfig";
 import Link from "next/link";
+import { Fragment, useState } from "react";
+import { useCookies } from "react-cookie";
+import Header from "../components/Header";
 import TagSearchBar from "../components/TagSearchBar";
-import { ThemeContext } from "../components/ThemeContextProvider";
-
+import config from "../src/knexConfig";
+import { Purple, Theme } from "../src/theme";
 
 export async function getServerSideProps() {
 	const db = knex(config);
@@ -28,7 +27,10 @@ interface Post {
 
 function Browse({ posts }: { posts:Post[] }) {
 	// const [theme, setTheme] = useState<Object>(purple);
-	const { theme, setTheme } = useContext(ThemeContext);
+	//const { theme, setTheme } = useContext(ThemeContext);
+	const [themeCookie, setThemeCookie] = useCookies();
+	const theme: Theme = themeCookie && themeCookie['theme'] ? themeCookie['theme'] : Purple;
+
 	const [titleInput, setTitleInput] = useState("");
 	const [tagsInput, setTagsInput] = useState([""]);
 	
@@ -60,14 +62,14 @@ function Browse({ posts }: { posts:Post[] }) {
 					alignItems: "center",
 					justifyContent: "center",
 					height: "calc(100vh - 64px)",
-					backgroundColor: theme.palette.primary.dark,
+					backgroundColor: theme?.palette.primary.dark,
 					">.MuiTextField-root": {
 						width: "75%",
-						backgroundColor: theme.palette.primary.main,
+						backgroundColor: theme?.palette.primary.main,
 						borderRadius: "0",
 						"input, textarea": {
-							color: theme.palette.secondary.light,
-							"&::placeholder": { color: theme.palette.primary.dark },
+							color: theme?.palette.secondary.light,
+							"&::placeholder": { color: theme?.palette.primary.dark },
 						},
 						">.MuiInputBase-multiline": {
 							borderRadius: "0",
@@ -98,7 +100,7 @@ function Browse({ posts }: { posts:Post[] }) {
 				<Box sx={{
 					height: "60vh",
 					width: "75%",
-					backgroundColor: theme.palette.primary.main,
+					backgroundColor: theme?.palette.primary.main,
 					overflowY: "scroll",
 					textOverflow: "ellipsis",
 				}}>
@@ -109,14 +111,14 @@ function Browse({ posts }: { posts:Post[] }) {
 								<Box
 									key={item.postid}
 									sx={{
-										backgroundColor: theme.palette.primary.main,
-										color: theme.palette.secondary.light,
+										backgroundColor: theme?.palette.primary.main,
+										color: theme?.palette.secondary.light,
 										width: "100%",
 										fontSize: 40,
 										display: "flex",
 										justifyContent: "center",
 										"&:hover": {
-											backgroundColor: theme.palette.primary.light,
+											backgroundColor: theme?.palette.primary.light,
 											cursor: "pointer",
 										},
 									}}

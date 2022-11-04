@@ -1,15 +1,14 @@
 import { TextField } from "@mui/material";
 import { Box } from "@mui/system";
+import { knex } from "knex";
 import { GetServerSidePropsContext, NextPage } from "next";
-import { Fragment, useContext, useState } from "react";
+import { ParsedUrlQuery } from "querystring";
+import { Fragment } from "react";
+import { useCookies } from "react-cookie";
 import Header from "../../components/Header";
 import TagBarFixed from "../../components/TagBarFixed";
-import { Purple } from "../../src/theme";
-import { knex } from "knex";
 import config from "../../src/knexConfig";
-import { useRouter } from "next/router";
-import { ParsedUrlQuery } from "querystring";
-import { ThemeContext } from "../../components/ThemeContextProvider";
+import { Purple, Theme } from "../../src/theme";
 
 interface IParams extends ParsedUrlQuery {
     pid: string
@@ -29,7 +28,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 const View: NextPage = ({ posts }: any) => {
 	// const [theme, setTheme] = useState(purple);
-	const { theme, setTheme } = useContext(ThemeContext);
+	// const { theme, setTheme } = useContext(ThemeContext);
+	const [themeCookie, setThemeCookie] = useCookies();
+	const theme: Theme = themeCookie && themeCookie['theme'] ? themeCookie['theme'] : Purple;
+
 	const posttags: string[] = JSON.parse("[" + posts[0].posttags.replace("{","").replace("}","") + "]");
 	// console.log(posttags);
 	return (
@@ -42,14 +44,14 @@ const View: NextPage = ({ posts }: any) => {
 					alignItems: "center",
 					justifyContent: "center",
 					height: "calc(100vh - 64px)",
-					backgroundColor: theme.palette.primary.dark,
+					backgroundColor: theme?.palette.primary.dark,
 					".MuiTextField-root": {
 						width: "75%",
-						backgroundColor: theme.palette.primary.main,
+						backgroundColor: theme?.palette.primary.main,
 						borderRadius: "0",
 						".MuiInputBase-root": {
 							".MuiInputBase-input": {
-								color: theme.palette.secondary.light,
+								color: theme?.palette.secondary.light,
 								// "&::placeholder": { color: theme.palette.primary.dark },
 							},
 						},
@@ -88,8 +90,8 @@ const View: NextPage = ({ posts }: any) => {
 					rows={15}
 					sx={{
 						height: "75%",
-						borderBottom: `0.01px solid ${theme.palette.secondary.main}`,
-						borderTop: `0.01px solid ${theme.palette.secondary.main}`,
+						borderBottom: `0.01px solid ${theme?.palette.secondary.main}`,
+						borderTop: `0.01px solid ${theme?.palette.secondary.main}`,
 					}}
 					variant="outlined"
 					placeholder="Idea description"

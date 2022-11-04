@@ -124,3 +124,12 @@ export const Amber:Theme = { // createTheme({
     },
   },
 }
+
+export const colorThemes = new Map<string, Theme>([
+  ["Amber", Amber],
+  ["Green", Green],
+  ["Indigo", Indigo],
+  ["Pink", Pink],
+  ["Purple", Purple],
+  ["Red", Red]
+])

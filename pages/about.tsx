@@ -1,20 +1,23 @@
 import { Container, Divider, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { NextPage } from "next";
-import { Fragment, useContext, useState } from "react";
+import { Fragment } from "react";
+import { useCookies } from "react-cookie";
 import Header from "../components/Header";
-import { ThemeContext } from "../components/ThemeContextProvider";
-import { Purple } from "../src/theme";
+import { Purple, Theme } from "../src/theme";
 
 const About: NextPage = () => {
 	// const [theme, setTheme] = useState(purple);
-	const { theme, setTheme } = useContext(ThemeContext);
+	// const { theme, setTheme } = useContext(ThemeContext);
+	const [themeCookie, setThemeCookie] = useCookies();
+	const theme: Theme = themeCookie && themeCookie['theme'] ? themeCookie['theme'] : Purple;
+
 	return (
 		<Fragment>
 			<Header />
 			<Box
 				sx={{
-					backgroundColor: theme.palette.primary.dark,
+					backgroundColor: theme?.palette.primary.dark,
 					height: "calc(100vh - 64px)",
 					width: "100vw",
 					display: "flex",
@@ -23,7 +26,7 @@ const About: NextPage = () => {
 			>
 				<Container
 					sx={{
-						color: theme.palette.secondary.light,
+						color: theme?.palette.secondary.light,
 						fontWeight: "lighter",
 						">h2": {
 							fontSize: "7vmin",
