@@ -1,14 +1,14 @@
-import { Button, Container, Modal, TextField, Typography } from "@mui/material";
+import { Button, Container, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
-import { ErrorMessage, useFormik } from "formik";
+import { useFormik } from "formik";
 import { NextPage } from "next";
-import { Fragment, useContext, useState } from "react";
+import { Fragment } from "react";
+import { useCookies } from "react-cookie";
+import * as Yup from "yup";
 import Header from "../components/Header";
 import TagBar from "../components/TagBar";
-import { Purple } from "../src/theme";
-import * as Yup from "yup";
-import { ThemeContext } from "../components/ThemeContextProvider";
+import { Purple, Theme } from "../src/theme";
 
 type Values = {
 	title: string;
@@ -18,7 +18,9 @@ type Values = {
 
 const Submit: NextPage = () => {
 	// const [theme, setTheme] = useState(purple);
-	const { theme, setTheme } = useContext(ThemeContext);
+	// const { theme, setTheme } = useContext(ThemeContext);
+	const [themeCookie, setThemeCookie] = useCookies();
+	const theme: Theme = themeCookie && themeCookie['theme'] ? themeCookie['theme'] : Purple;
 	
 	function handleSubmit(values: Values) {
 		axios
@@ -77,7 +79,7 @@ const Submit: NextPage = () => {
 					alignItems: "center",
 					justifyContent: "center",
 					height: "calc(100vh - 64px)",
-					backgroundColor: theme.palette.primary.dark,
+					backgroundColor: theme?.palette.primary.dark,
 					form: {
 						display: "flex",
 						flexDirection: "column",
@@ -86,11 +88,11 @@ const Submit: NextPage = () => {
 						width: "100%",
 						".MuiTextField-root": {
 							width: "75%",
-							backgroundColor: theme.palette.primary.main,
+							backgroundColor: theme?.palette.primary.main,
 							borderRadius: "0",
 							"input, textarea": {
-								color: theme.palette.secondary.light,
-								"&::placeholder": { color: theme.palette.primary.dark },
+								color: theme?.palette.secondary.light,
+								"&::placeholder": { color: theme?.palette.primary.dark },
 							},
 							".MuiInputBase-multiline": {
 								borderRadius: "0",

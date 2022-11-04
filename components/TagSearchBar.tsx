@@ -1,9 +1,7 @@
 import { Autocomplete, TextField } from "@mui/material";
-import { useContext, useState } from "react";
+import { useCookies } from "react-cookie";
 import { tagOptions } from "../src/tags";
-import { Purple } from "../src/theme";
-import { Theme } from "../src/theme";
-import { ThemeContext } from "./ThemeContextProvider";
+import { Purple, Theme } from "../src/theme";
 
 interface tagSearchProps {
 	border_radius?: string;
@@ -13,7 +11,10 @@ interface tagSearchProps {
 
 export default function TagSearchBar(props: tagSearchProps) {
 	// const [theme, setTheme] = useState<Theme>(purple);
-	const { theme, setTheme } = useContext(ThemeContext);
+	// const { theme, setTheme } = useContext(ThemeContext);
+	const [themeCookie, setThemeCookie] = useCookies();
+	const theme: Theme = themeCookie && themeCookie['theme'] ? themeCookie['theme'] : Purple;
+
 	return (
 		<Autocomplete
 			onChange={(e, value) => props.setTagsInput(value)} //this part works
@@ -22,7 +23,7 @@ export default function TagSearchBar(props: tagSearchProps) {
 			name="tags"
 			sx={{
 				width: "75%",
-				backgroundColor: theme.palette.primary.main,
+				backgroundColor: theme?.palette.primary.main,
 				borderRadius: props.border_radius,
 				".MuiInput-underline": {
 					".MuiChip-root": {
@@ -35,12 +36,12 @@ export default function TagSearchBar(props: tagSearchProps) {
 					},
 				},
 				".MuiChip-label": {
-					color: theme.palette.secondary.light,
+					color: theme?.palette.secondary.light,
 					overflow: "visible",
 				},
 				".MuiInputBase-input": {
 					fontSize: props.font_size,
-					color: theme.palette.primary.dark,
+					color: theme?.palette.primary.dark,
 				},
 			}}
 			options={tagOptions}

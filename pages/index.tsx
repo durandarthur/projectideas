@@ -1,18 +1,20 @@
-import { Container, Typography, Divider } from "@mui/material";
+import NoteAltOutlinedIcon from "@mui/icons-material/NoteAltOutlined";
+import SearchIcon from "@mui/icons-material/Search";
+import { Container, Divider, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import type { NextPage } from "next";
 import Link from "next/link";
-import React, { Fragment, useContext, useState } from "react";
-import styles from "../styles/Home.module.css";
-import NoteAltOutlinedIcon from "@mui/icons-material/NoteAltOutlined";
-import SearchIcon from "@mui/icons-material/Search";
+import React, { Fragment } from "react";
+import { useCookies } from "react-cookie";
 import Header from "../components/Header";
-import { Purple } from "../src/theme";
-import { ThemeContext } from "../components/ThemeContextProvider";
+import { Purple, Theme } from "../src/theme";
 
 const Home: NextPage = () => {
 	// const [theme, setTheme] = useState(purple);
-	const { theme, setTheme } = useContext(ThemeContext);
+	// const { theme, setTheme } = useContext(ThemeContext);
+	const [themeCookie, setThemeCookie] = useCookies();
+	const theme: Theme = themeCookie && themeCookie['theme'] ? themeCookie['theme'] : Purple;
+
 	return (
 		<Fragment>
 			<Header />
@@ -20,7 +22,7 @@ const Home: NextPage = () => {
 				sx={{
 					display: "flex",
 					height: "calc(100vh - 64px)",
-					backgroundColor: theme.palette.primary.dark,
+					backgroundColor: theme?.palette.primary.dark,
 					">div": {
 						display: "flex",
 						flexDirection: "column",
@@ -29,7 +31,7 @@ const Home: NextPage = () => {
 						height: "calc(100vh - 64px)",
 						">svg": {
 							fontSize: 300,
-							color: theme.palette.primary.main,
+							color: theme?.palette.primary.main,
 						},
 						">p": {
 							fontSize: 40,
@@ -38,7 +40,7 @@ const Home: NextPage = () => {
 							mb: "5vh",
 						},
 						">a": {
-							backgroundColor: theme.palette.primary.main,
+							backgroundColor: theme?.palette.primary.main,
 							color: "white",
 							p: "24px 80px",
 							borderRadius: "10px",

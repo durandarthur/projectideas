@@ -1,25 +1,24 @@
-import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { createContext, useContext, useState } from "react";
-import { Purple, Theme } from "../src/theme";
-import { ThemeContextProvider } from "../components/ThemeContextProvider";
-// import theme from "../src/theme";
-// import { ThemeProvider } from "@mui/system";
-
-
+import "../styles/globals.css";
+import { useCookies, CookiesProvider } from "react-cookie";
+import { createContext, useContext, useEffect, useState } from "react";
+import { Amber, Green, Indigo, Pink, Purple, Red, Theme, colorThemes } from "../src/theme";
+import { ThemeContext } from "../src/themeContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
-	// const [theme, setTheme] = useState<Theme>(Purple);
-	// const state = useContext(AppContext);
-	/*const state = {
-		theme: theme,
-		setTheme: setTheme
-	}*/
+
+	const [theme, setTheme] = useState(Purple);
+	const value = { theme, setTheme };
+
+	useEffect(() => { //useEffect to avoid "localStorage not defined" issue
+		if (localStorage.getItem('theme'))
+			setTheme(colorThemes.get(localStorage.getItem('theme')!) ?? Purple);
+	}, [])
 
 	return (
-		<ThemeContextProvider>
-			<Component {...pageProps} /*theme={theme} setTheme={setTheme}*/ />
-		</ThemeContextProvider>
+		<ThemeContext.Provider value={value}>
+			<Component {...pageProps} />
+		</ThemeContext.Provider>
 	);
 }
 

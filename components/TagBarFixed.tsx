@@ -1,9 +1,8 @@
-import { useContext, useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import { useCookies } from "react-cookie";
 import { tagOptions } from "../src/tags";
-import { Purple } from "../src/theme";
-import { ThemeContext } from "./ThemeContextProvider";
+import { Purple, Theme } from "../src/theme";
 
 // type Values = {
 // 	title: String;
@@ -19,14 +18,17 @@ interface tagProps {
 
 export default function TagBarFixed(props: tagProps) {
 	// const [theme, setTheme] = useState(purple);
-	const { theme, setTheme } = useContext(ThemeContext);
+	// const { theme, setTheme } = useContext(ThemeContext);
+	const [themeCookie, setThemeCookie] = useCookies();
+	const theme: Theme = themeCookie && themeCookie['theme'] ? themeCookie['theme'] : Purple;
+
 	return (
 		<Autocomplete
 			multiple
 			id="tags-readOnly"
 			sx={{
 				width: "75%",
-				backgroundColor: theme.palette.primary.main,
+				backgroundColor: theme?.palette.primary.main,
 				borderRadius: props.border_radius,
 				".MuiInput-underline": {
 					".MuiChip-root": {
@@ -39,12 +41,12 @@ export default function TagBarFixed(props: tagProps) {
 					},
 				},
 				".MuiChip-label": {
-					color: theme.palette.secondary.light,
+					color: theme?.palette.secondary.light,
 					overflow: "visible",
 				},
 				".MuiInputBase-input": {
 					fontSize: props.font_size,
-					color: theme.palette.primary.dark,
+					color: theme?.palette.primary.dark,
 				},
 				".MuiTextField-root": {
 					width: "100%!important",
