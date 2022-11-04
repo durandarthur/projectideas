@@ -1,8 +1,8 @@
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { useCookies } from "react-cookie";
+import { useContext } from "react";
 import { tagOptions } from "../src/tags";
-import { Purple, Theme } from "../src/theme";
+import { ThemeContext } from "../src/themeContext";
 
 // type Values = {
 // 	title: String;
@@ -17,10 +17,8 @@ interface tagProps {
 }
 
 export default function TagBarFixed(props: tagProps) {
-	// const [theme, setTheme] = useState(purple);
-	// const { theme, setTheme } = useContext(ThemeContext);
-	const [themeCookie, setThemeCookie] = useCookies();
-	const theme: Theme = themeCookie && themeCookie['theme'] ? themeCookie['theme'] : Purple;
+
+	const { theme, setTheme } = useContext(ThemeContext);
 
 	return (
 		<Autocomplete

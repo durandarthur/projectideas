@@ -2,12 +2,11 @@ import { Stack, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { knex } from "knex";
 import Link from "next/link";
-import { Fragment, useState } from "react";
-import { useCookies } from "react-cookie";
+import { Fragment, useContext, useState } from "react";
 import Header from "../components/Header";
 import TagSearchBar from "../components/TagSearchBar";
 import config from "../src/knexConfig";
-import { Purple, Theme } from "../src/theme";
+import { ThemeContext } from "../src/themeContext";
 
 export async function getServerSideProps() {
 	const db = knex(config);
@@ -26,10 +25,8 @@ interface Post {
 }
 
 function Browse({ posts }: { posts:Post[] }) {
-	// const [theme, setTheme] = useState<Object>(purple);
-	//const { theme, setTheme } = useContext(ThemeContext);
-	const [themeCookie, setThemeCookie] = useCookies();
-	const theme: Theme = themeCookie && themeCookie['theme'] ? themeCookie['theme'] : Purple;
+
+	const { theme, setTheme } = useContext(ThemeContext);
 
 	const [titleInput, setTitleInput] = useState("");
 	const [tagsInput, setTagsInput] = useState([""]);
@@ -44,7 +41,7 @@ function Browse({ posts }: { posts:Post[] }) {
 		}
 	}).filter((element) => {
 		const tags: string[] = JSON.parse("[" + element.posttags.replace("{","").replace("}","") + "]");
-		if (tagsInput === ['']) {
+		if (tagsInput[0] === "") { //previously tagsInput === ['']
 			return element;
 		}
 		else {
