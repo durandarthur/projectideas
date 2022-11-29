@@ -18,8 +18,8 @@ type Values = {
 const Submit: NextPage = () => {
 	const { theme, setTheme } = useContext(ThemeContext);
 
-	function handleSubmit(values: Values) {
-		axios
+	async function handleSubmit(values: Values) {
+		const res = await axios
 			.post("http://localhost:3000/api/post", {
 				title: values.title,
 				text: values.text,
@@ -27,7 +27,12 @@ const Submit: NextPage = () => {
 			})
 			.then((response) => {
 				console.log(response);
+				formik.setSubmitting(false);
+			})
+			.catch((error) => {
+				console.log(error);
 			});
+		return res;
 	}
 
 	const validationSchema = Yup.object({
@@ -58,9 +63,10 @@ const Submit: NextPage = () => {
 			tags: [],
 		},
 		onSubmit: (values) => {
+			// disable submit button
 			handleSubmit(values);
+			window.location.replace("/browse");
 			// alert(JSON.stringify(values, null, 2));
-			// add redirect
 		},
 		validationSchema: validationSchema,
 	});
@@ -88,7 +94,9 @@ const Submit: NextPage = () => {
 							borderRadius: "0",
 							"input, textarea": {
 								color: theme?.palette.secondary.light,
-								"&::placeholder": { color: theme?.palette.primary.dark },
+								"&::placeholder": {
+									color: theme?.palette.primary.dark,
+								},
 							},
 							".MuiInputBase-multiline": {
 								borderRadius: "0",
@@ -115,11 +123,16 @@ const Submit: NextPage = () => {
 						variant="outlined"
 						// placeholder={formik.errors.title && formik.touched.title ? formik.errors.title : "Title"}
 						placeholder={"Title"}
-						error={formik.touched.title && Boolean(formik.errors.title)}
+						error={
+							formik.touched.title && Boolean(formik.errors.title)
+						}
 						helperText={formik.touched.title && formik.errors.title}
 						sx={{ borderRadius: "10px 10px 0 0", mt: "10px" }}
 						inputProps={{
-							style: { fontSize: "5vmin", borderRadius: "10px 10px 0 0" },
+							style: {
+								fontSize: "5vmin",
+								borderRadius: "10px 10px 0 0",
+							},
 						}}
 					></TextField>
 					<TextField
@@ -136,7 +149,9 @@ const Submit: NextPage = () => {
 						}}
 						variant="outlined"
 						placeholder={"Description"}
-						error={formik.touched.text && Boolean(formik.errors.text)}
+						error={
+							formik.touched.text && Boolean(formik.errors.text)
+						}
 						helperText={formik.touched.text && formik.errors.text}
 						inputProps={{
 							style: {
@@ -168,25 +183,33 @@ const Submit: NextPage = () => {
 						}}
 					>
 						<Button
+							disabled={formik.isSubmitting}
 							type="submit"
 							variant="contained"
 							color="primary"
 							sx={{
 								mr: "10px",
 								backgroundColor: theme.palette.primary.main,
-								"&:hover": { backgroundColor: theme.palette.primary.light },
+								"&:hover": {
+									backgroundColor:
+										theme.palette.primary.light,
+								},
 							}}
 						>
 							SUBMIT
 						</Button>
 						<Button
+							disabled={formik.isSubmitting}
 							variant="contained"
 							color="primary"
 							href="/"
 							sx={{
 								mr: "10px",
 								backgroundColor: theme.palette.primary.main,
-								"&:hover": { backgroundColor: theme.palette.primary.light },
+								"&:hover": {
+									backgroundColor:
+										theme.palette.primary.light,
+								},
 							}}
 						>
 							CANCEL

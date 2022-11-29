@@ -1,4 +1,12 @@
-import { amber, green, grey, indigo, pink, purple, red } from "@mui/material/colors";
+import {
+  amber,
+  green,
+  grey,
+  indigo,
+  pink,
+  purple,
+  red,
+} from "@mui/material/colors";
 import { ThemeContext } from "@mui/styled-engine";
 import { createContext } from "react";
 
@@ -7,22 +15,23 @@ const bgColor = grey[900];
 export type Theme = {
   palette: {
     primary: {
-      main: string,
-      dark: string,
-      light: string
-    },
+      main: string;
+      dark: string;
+      light: string;
+    };
     secondary: {
-      main: string,
-      light: string
-    },
+      main: string;
+      light: string;
+    };
     error: {
-      main: string
-    }
-  }
-}
+      main: string;
+    };
+  };
+};
 
 // Create a theme instance.
-export const Purple:Theme = { // createTheme({
+export const Purple: Theme = {
+  // createTheme({
   palette: {
     primary: {
       main: purple["A200"],
@@ -38,9 +47,10 @@ export const Purple:Theme = { // createTheme({
       main: red.A400,
     },
   },
-}
+};
 
-export const Red:Theme = { // createTheme({
+export const Red: Theme = {
+  // createTheme({
   palette: {
     primary: {
       main: red[500],
@@ -55,9 +65,10 @@ export const Red:Theme = { // createTheme({
       main: red.A400,
     },
   },
-}
+};
 
-export const Pink:Theme = { // createTheme({
+export const Pink: Theme = {
+  // createTheme({
   palette: {
     primary: {
       main: pink[500],
@@ -72,9 +83,10 @@ export const Pink:Theme = { // createTheme({
       main: red.A400,
     },
   },
-}
+};
 
-export const Indigo:Theme = { // createTheme({
+export const Indigo: Theme = {
+  // createTheme({
   palette: {
     primary: {
       main: indigo[500],
@@ -89,9 +101,10 @@ export const Indigo:Theme = { // createTheme({
       main: red.A400,
     },
   },
-}
+};
 
-export const Green:Theme = { // createTheme({
+export const Green: Theme = {
+  // createTheme({
   palette: {
     primary: {
       main: green[500],
@@ -106,9 +119,10 @@ export const Green:Theme = { // createTheme({
       main: red.A400,
     },
   },
-}
+};
 
-export const Amber:Theme = { // createTheme({
+export const Amber: Theme = {
+  // createTheme({
   palette: {
     primary: {
       main: amber[500],
@@ -123,7 +137,7 @@ export const Amber:Theme = { // createTheme({
       main: red.A400,
     },
   },
-}
+};
 
 export const colorThemes = new Map<string, Theme>([
   ["Amber", Amber],
@@ -131,5 +145,5 @@ export const colorThemes = new Map<string, Theme>([
   ["Indigo", Indigo],
   ["Pink", Pink],
   ["Purple", Purple],
-  ["Red", Red]
-])
+  ["Red", Red],
+]);
